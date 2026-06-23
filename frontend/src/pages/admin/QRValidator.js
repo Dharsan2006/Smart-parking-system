@@ -117,7 +117,7 @@ const QRValidator = () => {
                   </div>
                   <div className="result-item">
                     <span>Amount</span>
-                    <strong>${result.totalAmount?.toFixed(2) || '-'}</strong>
+                    <strong>₹{result.totalAmount?.toFixed(2) || '-'}</strong>
                   </div>
                 </div>
 

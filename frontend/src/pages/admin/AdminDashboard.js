@@ -90,7 +90,7 @@ const AdminDashboard = () => {
               <StatCard icon="📋" label="Total Bookings" value={stats?.totalBookings || 0} color="#3b82f6" />
               <StatCard icon="⚡" label="Active Now" value={stats?.activeBookings || 0} color="#10b981" />
               <StatCard icon="✓" label="Completed" value={stats?.completedBookings || 0} color="#6b7280" />
-              <StatCard icon="💰" label="Total Revenue" value={`$${(stats?.totalRevenue || 0).toFixed(2)}`} color="#f59e0b" sub={`Today: $${(stats?.todayRevenue || 0).toFixed(2)}`} />
+              <StatCard icon="💰" label="Total Revenue" value={`₹${(stats?.totalRevenue || 0).toFixed(2)}`} color="#f59e0b" sub={`Today: ₹${(stats?.todayRevenue || 0).toFixed(2)}`} />
             </div>
 
             {/* Charts */}
@@ -119,7 +119,7 @@ const AdminDashboard = () => {
                     <YAxis stroke="#64748b" />
                     <Tooltip
                       contentStyle={{ background: '#1a1a2e', border: '1px solid #2d2d4e', borderRadius: '8px' }}
-                      formatter={(v) => [`$${v.toFixed(2)}`, 'Revenue']}
+                      formatter={(v) => [`₹${v.toFixed(2)}`, 'Revenue']}
                     />
                     <Bar dataKey="amount" fill="#6366f1" radius={[6, 6, 0, 0]} />
                   </BarChart>

@@ -138,7 +138,7 @@ const AdminSlots = () => {
                       <span className="status-dot" style={{ background: statusColors[slot.status] }}></span>
                       {slot.status}
                     </td>
-                    <td>${slot.pricePerHour}</td>
+                    <td>₹{slot.pricePerHour}</td>
                     <td>
                       <div className="table-actions">
                         <button className="edit-btn" onClick={() => openEdit(slot)}>Edit</button>
@@ -198,7 +198,7 @@ const AdminSlots = () => {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label>Price per Hour ($)</label>
+                  <label>Price per Hour (₹)</label>
                   <input
                     type="number"
                     value={form.pricePerHour}

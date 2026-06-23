@@ -85,15 +85,15 @@ const PaymentPage = () => {
             <div className="summary-divider"></div>
             <div className="summary-row">
               <span>Base Fee</span>
-              <strong>$2.00</strong>
+              <strong>₹2.00</strong>
             </div>
             <div className="summary-row">
               <span>Parking Fee</span>
-              <strong>${((booking?.totalAmount || 0) - 2).toFixed(2)}</strong>
+              <strong>₹{((booking?.totalAmount || 0) - 2).toFixed(2)}</strong>
             </div>
             <div className="summary-row total">
               <span>Total Amount</span>
-              <strong>${booking?.totalAmount?.toFixed(2)}</strong>
+              <strong>₹{booking?.totalAmount?.toFixed(2)}</strong>
             </div>
           </div>
 
@@ -118,7 +118,7 @@ const PaymentPage = () => {
               onClick={handlePayment}
               disabled={processing || !paymentMethod}
             >
-              {processing ? 'Processing...' : `Pay $${booking?.totalAmount?.toFixed(2)}`}
+              {processing ? 'Processing...' : `Pay ₹${booking?.totalAmount?.toFixed(2)}`}
             </button>
 
             <p className="secure-note">🔒 Secure payment processing</p>

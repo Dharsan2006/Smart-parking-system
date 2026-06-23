@@ -130,7 +130,7 @@ const Dashboard = () => {
                       <td>{b.vehicleNumber}</td>
                       <td>{new Date(b.bookingTime).toLocaleDateString()}</td>
                       <td>{b.durationHours ? `${b.durationHours.toFixed(1)}h` : '-'}</td>
-                      <td>${b.totalAmount?.toFixed(2) || '-'}</td>
+                      <td>₹{b.totalAmount?.toFixed(2) || '-'}</td>
                       <td>
                         <span className="status-badge" style={{ background: `${statusColor[b.status]}22`, color: statusColor[b.status] }}>
                           {b.status}

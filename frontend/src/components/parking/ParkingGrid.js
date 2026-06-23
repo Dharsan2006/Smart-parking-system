@@ -88,14 +88,14 @@ const ParkingGrid = ({ slots, onSlotClick, selectable = false, selectedSlotId = 
                     <div className="slot-type-icon">{typeIcons[slot.slotType] || '🚗'}</div>
                     <div className="slot-number">{slot.slotNumber}</div>
                     <div className="slot-status-icon">{config.icon}</div>
-                    <div className="slot-price">${slot.pricePerHour}/hr</div>
+                    <div className="slot-price">₹{slot.pricePerHour}/hr</div>
 
                     {hoveredSlot === slot.id && (
                       <div className="slot-tooltip">
                         <div><strong>{slot.slotNumber}</strong></div>
                         <div>Type: {slot.slotType}</div>
                         <div>Status: {config.label}</div>
-                        <div>Price: ${slot.pricePerHour}/hr</div>
+                        <div>Price: ₹{slot.pricePerHour}/hr</div>
                         {isClickable && <div className="tooltip-action">Click to Book</div>}
                       </div>
                     )}

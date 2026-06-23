@@ -80,9 +80,9 @@ Duration: ${booking.durationHours ? booking.durationHours.toFixed(2) + ' hours' 
 
 PAYMENT SUMMARY
 ---------------
-Base Fee: $2.00
-Parking Fee: $${((booking.totalAmount || 0) - 2).toFixed(2)}
-Total Amount: $${(booking.totalAmount || 0).toFixed(2)}
+Base Fee: ₹2.00
+Parking Fee: ₹${((booking.totalAmount || 0) - 2).toFixed(2)}
+Total Amount: ₹${(booking.totalAmount || 0).toFixed(2)}
 Status: ${booking.payment?.status || 'PENDING'}
 ${booking.payment?.transactionId ? 'Transaction ID: ' + booking.payment.transactionId : ''}
 
@@ -152,7 +152,7 @@ Thank you for using SmartPark!
                 </div>
                 <div className="info-item">
                   <span>Total Amount</span>
-                  <strong className="amount">${booking.totalAmount?.toFixed(2) || '-'}</strong>
+                  <strong className="amount">₹{booking.totalAmount?.toFixed(2) || '-'}</strong>
                 </div>
               </div>
             </div>
@@ -164,7 +164,7 @@ Thank you for using SmartPark!
                 <div className="info-grid">
                   <div className="info-item">
                     <span>Amount</span>
-                    <strong>${booking.payment.amount?.toFixed(2)}</strong>
+                    <strong>₹{booking.payment.amount?.toFixed(2)}</strong>
                   </div>
                   <div className="info-item">
                     <span>Method</span>

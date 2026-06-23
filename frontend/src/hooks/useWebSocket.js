@@ -2,13 +2,21 @@ import { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 
+const getWsUrl = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+  if (apiUrl) {
+    return apiUrl.replace(/\/api\/?$/, '/ws');
+  }
+  return 'http://localhost:8080/ws';
+};
+
 const useWebSocket = (topic, onMessage) => {
   const clientRef = useRef(null);
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
     const client = new Client({
-      webSocketFactory: () => new SockJS('http://localhost:8080/ws'),
+      webSocketFactory: () => new SockJS(getWsUrl()),
       reconnectDelay: 5000,
       onConnect: () => {
         setConnected(true);

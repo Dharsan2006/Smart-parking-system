@@ -102,11 +102,11 @@ const BookingPage = () => {
               </div>
               <div className="detail-row">
                 <span>Rate</span>
-                <strong>${slot?.pricePerHour}/hour</strong>
+                <strong>₹{slot?.pricePerHour}/hour</strong>
               </div>
               <div className="detail-row">
                 <span>Base Fee</span>
-                <strong>$2.00</strong>
+                <strong>₹2.00</strong>
               </div>
             </div>
 
@@ -117,7 +117,7 @@ const BookingPage = () => {
               </div>
               <div className="cost-row total">
                 <span>Estimated Total</span>
-                <span>${getEstimatedCost()}</span>
+                <span>₹{getEstimatedCost()}</span>
               </div>
             </div>
           </div>
@@ -161,11 +161,11 @@ const BookingPage = () => {
 
               <div className="pricing-note">
                 <span>💡</span>
-                <span>Final amount is calculated based on actual parking duration. Base fee $2.00 + ${slot?.pricePerHour}/hr</span>
+                <span>Final amount is calculated based on actual parking duration. Base fee ₹2.00 + ₹{slot?.pricePerHour}/hr</span>
               </div>
 
               <button type="submit" className="book-btn" disabled={submitting}>
-                {submitting ? 'Confirming...' : `Confirm Booking — $${getEstimatedCost()}`}
+                {submitting ? 'Confirming...' : `Confirm Booking — ₹${getEstimatedCost()}`}
               </button>
             </form>
           </div>

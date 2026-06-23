@@ -80,7 +80,7 @@ const BookingHistory = () => {
                   </div>
                   <div className="booking-card-right">
                     <div className="booking-amount">
-                      {b.totalAmount ? `$${b.totalAmount.toFixed(2)}` : '-'}
+                      {b.totalAmount ? `₹${b.totalAmount.toFixed(2)}` : '-'}
                     </div>
                     <span className="status-badge" style={{ background: config.bg, color: config.color }}>
                       {b.status}

@@ -66,6 +66,7 @@ Smart parking Management/
 1. **Install dependencies**:
    ```bash
    cd frontend
+   
    npm install
    ```
 
@@ -158,14 +159,14 @@ PATCH  /api/admin/slots/{id}/status  Update slot status
 ## 💰 Pricing Model
 
 ```
-Total = Base Fee ($2.00) + (Duration in hours × Price per hour)
+Total = Base Fee (₹2.00) + (Duration in hours × Price per hour)
 ```
 
 Slot type pricing:
-- Regular: $5.00/hr
-- Compact: $4.00/hr
-- Handicapped: $3.00/hr
-- EV Charging: $8.00/hr
+- Regular: ₹5.00/hr
+- Compact: ₹4.00/hr
+- Handicapped: ₹3.00/hr
+- EV Charging: ₹8.00/hr
 
 ---
 
