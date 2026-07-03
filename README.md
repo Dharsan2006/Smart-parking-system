@@ -1,6 +1,6 @@
 # 🅿 SmartPark - Smart Parking Management System
 
-A full-stack Smart Parking System built with **React.js**, **Spring Boot**, and **MySQL**.
+A full-stack Smart Parking System built with **React.js**, **Spring Boot**, and **PostgreSQL**.
 
 ---
 
@@ -33,18 +33,18 @@ Smart parking Management/
 ### Prerequisites
 - Java 17+
 - Node.js 18+
-- MySQL 8.0+
+- PostgreSQL 15+
 - Maven 3.8+
 
 ---
 
 ### Backend Setup
 
-1. **Configure MySQL** — Update `backend/src/main/resources/application.properties`:
+1. **Configure PostgreSQL** — Update `backend/src/main/resources/application.properties`:
    ```properties
-   spring.datasource.url=jdbc:mysql://localhost:3306/Smartparking?createDatabaseIfNotExist=true
-   spring.datasource.username=root
-   spring.datasource.password=1234
+   spring.datasource.url=jdbc:postgresql://localhost:5432/Smartparking
+   spring.datasource.username=postgres
+   spring.datasource.password=12345
    ```
 
 2. **Run the backend**:
@@ -177,7 +177,7 @@ Slot type pricing:
 - Spring Security + JWT
 - Spring Data JPA + Hibernate
 - Spring WebSocket (STOMP)
-- MySQL 8
+- PostgreSQL 17
 - ZXing (QR Code generation)
 - Lombok
 

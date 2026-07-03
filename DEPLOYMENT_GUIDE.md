@@ -1,6 +1,6 @@
 # 🚀 Production Deployment Guide
 
-This guide explains how to host your **MySQL Database** and **Spring Boot Backend**, and connect them to your **Vercel Frontend** (`https://smart-parking-system-kappa-olive.vercel.app`).
+This guide explains how to host your **PostgreSQL Database** and **Spring Boot Backend**, and connect them to your **Vercel Frontend** (`https://smart-parking-system-kappa-olive.vercel.app`).
 
 ---
 
@@ -19,24 +19,24 @@ This guide explains how to host your **MySQL Database** and **Spring Boot Backen
                         |      (Render or Railway)         |
                         +----------------------------------+
                                          |
-                                         | JDBC MySQL Connection
+                                         | JDBC PostgreSQL Connection
                                          v
                         +----------------------------------+
-                        |      Hosted MySQL Database       |
+                        |    Hosted PostgreSQL Database    |
                         |       (Aiven or Railway)         |
                         +----------------------------------+
 ```
 
 ---
 
-## 📁 1. Setup the Database (MySQL)
+## 📁 1. Setup the Database (PostgreSQL)
 
-You need a hosted MySQL database that is accessible over the internet. Here are the two best options:
+You need a hosted PostgreSQL database that is accessible over the internet. Here are the two best options:
 
 ### Option A: Aiven.io (Recommended - Free Tier Available)
 Aiven offers a dedicated, reliable, and completely free MySQL database tier.
 1. Sign up at [Aiven.io](https://aiven.io/).
-2. Create a new service and select **MySQL**.
+2. Create a new service and select **PostgreSQL**.
 3. Choose the **Free Plan** (available in select regions like AWS `eu-west-1` or `us-east-1`).
 4. Once the service is running, copy the connection details:
    - **Host / Service URI**
@@ -46,11 +46,11 @@ Aiven offers a dedicated, reliable, and completely free MySQL database tier.
    - **Database Name** (default is usually `defaultdb`)
 
 ### Option B: Railway.app (Easiest Integration)
-If you host your backend on Railway, you can spin up a MySQL database in the same project instantly.
+If you host your backend on Railway, you can spin up a PostgreSQL database in the same project instantly.
 1. Sign up at [Railway.app](https://railway.app/).
-2. Click **New Project** -> **Provision MySQL**.
-3. Railway automatically sets up the database. Go to the MySQL service -> **Variables** tab to find your connection details:
-   - `MYSQLHOST`, `MYSQLPORT`, `MYSQLUSER`, `MYSQLPASSWORD`, `MYSQLDATABASE`
+2. Click **New Project** -> **Provision PostgreSQL**.
+3. Railway automatically sets up the database. Go to the PostgreSQL service -> **Variables** tab to find your connection details:
+   - `PGHOST`, `PGPORT`, `PGUSER`, `PGPASSWORD`, `PGDATABASE`
 
 ---
 
@@ -68,7 +68,7 @@ Render allows you to build and host your backend for free using the `Dockerfile`
    - **Runtime**: `Docker` (Render will automatically detect the `Dockerfile` we created)
    - **Instance Type**: `Free`
 5. Click **Advanced** and add the following **Environment Variables**:
-   - `SPRING_DATASOURCE_URL` = `jdbc:mysql://<YOUR_DB_HOST>:<YOUR_DB_PORT>/<YOUR_DB_NAME>?useSSL=true&serverTimezone=UTC`
+   - `SPRING_DATASOURCE_URL` = `jdbc:postgresql://<YOUR_DB_HOST>:<YOUR_DB_PORT>/<YOUR_DB_NAME>?sslmode=require`
    - `SPRING_DATASOURCE_USERNAME` = `<YOUR_DB_USERNAME>`
    - `SPRING_DATASOURCE_PASSWORD` = `<YOUR_DB_PASSWORD>`
    - `ALLOWED_ORIGINS` = `https://smart-parking-system-kappa-olive.vercel.app` (Your Vercel URL)
@@ -81,10 +81,10 @@ Render allows you to build and host your backend for free using the `Dockerfile`
 1. In your Railway project, click **New** -> **GitHub Repo** and connect your repository.
 2. Under settings, set the root directory to `backend`.
 3. Railway will build the backend using Nixpacks or Dockerfile.
-4. Add the same Environment Variables as above. If using Railway's MySQL database, you can bind them directly:
-   - `SPRING_DATASOURCE_URL` = `jdbc:mysql://${{MySQL.MYSQLHOST}}:${{MySQL.MYSQLPORT}}/${{MySQL.MYSQLDATABASE}}?useSSL=false&serverTimezone=UTC`
-   - `SPRING_DATASOURCE_USERNAME` = `${{MySQL.MYSQLUSER}}`
-   - `SPRING_DATASOURCE_PASSWORD` = `${{MySQL.MYSQLPASSWORD}}`
+4. Add the same Environment Variables as above. If using Railway's PostgreSQL database, you can bind them directly:
+   - `SPRING_DATASOURCE_URL` = `jdbc:postgresql://${{Postgres.PGHOST}}:${{Postgres.PGPORT}}/${{Postgres.PGDATABASE}}`
+   - `SPRING_DATASOURCE_USERNAME` = `${{Postgres.PGUSER}}`
+   - `SPRING_DATASOURCE_PASSWORD` = `${{Postgres.PGPASSWORD}}`
    - `ALLOWED_ORIGINS` = `https://smart-parking-system-kappa-olive.vercel.app`
    - `JWT_SECRET` = `<your-jwt-secret>`
 5. Go to service **Settings** -> **Public Networking** and click **Generate Domain** to expose your API.
