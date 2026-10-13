@@ -7,7 +7,7 @@ const getWsUrl = () => {
   if (apiUrl) {
     return apiUrl.replace(/\/api\/?$/, '/ws');
   }
-  return 'http://localhost:8080/ws';
+  return 'http://localhost:8081/ws';
 };
 
 const useWebSocket = (topic, onMessage) => {

@@ -27,7 +27,11 @@ const Register = () => {
       toast.success('Account created successfully!');
       navigate('/');
     } catch (err) {
-      toast.error(err.response?.data || 'Registration failed');
+      const message =
+        typeof err.response?.data === 'string'
+          ? err.response.data
+          : err.response?.data?.message || 'Registration failed';
+      toast.error(message);
     } finally {
       setLoading(false);
     }

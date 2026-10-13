@@ -23,7 +23,11 @@ const Login = () => {
       toast.success(`Welcome back, ${name}!`);
       navigate(role === 'ADMIN' ? '/admin' : '/');
     } catch (err) {
-      toast.error(err.response?.data || 'Login failed. Check your credentials.');
+      const message =
+        typeof err.response?.data === 'string'
+          ? err.response.data
+          : err.response?.data?.message || 'Login failed. Check your credentials.';
+      toast.error(message);
     } finally {
       setLoading(false);
     }
