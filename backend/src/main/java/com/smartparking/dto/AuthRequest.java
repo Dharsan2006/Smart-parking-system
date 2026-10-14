@@ -12,4 +12,8 @@ public class AuthRequest {
 
     @NotBlank
     private String password;
+
+    public void setEmail(String email) {
+        this.email = email != null ? email.trim() : null;
+    }
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*")
 public class AuthController {
 
     @Autowired
@@ -32,8 +31,11 @@ public class AuthController {
         try {
             AuthResponse response = authService.login(request);
             return ResponseEntity.ok(response);
+        } catch (org.springframework.security.authentication.BadCredentialsException e) {
+            return ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Invalid email or password");
+            return ResponseEntity.badRequest().body(e.getMessage() != null ? e.getMessage() : "Invalid email or password");
         }
     }
 }
+

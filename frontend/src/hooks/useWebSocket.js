@@ -13,6 +13,9 @@ const getWsUrl = () => {
 const useWebSocket = (topic, onMessage) => {
   const clientRef = useRef(null);
   const [connected, setConnected] = useState(false);
+  // Keep a stable ref to the latest callback to avoid reconnecting on every render
+  const onMessageRef = useRef(onMessage);
+  useEffect(() => { onMessageRef.current = onMessage; }, [onMessage]);
 
   useEffect(() => {
     const client = new Client({
@@ -23,7 +26,7 @@ const useWebSocket = (topic, onMessage) => {
         client.subscribe(topic, (message) => {
           try {
             const data = JSON.parse(message.body);
-            onMessage(data);
+            onMessageRef.current(data);
           } catch (e) {
             console.error('WebSocket message parse error:', e);
           }
@@ -43,7 +46,7 @@ const useWebSocket = (topic, onMessage) => {
         clientRef.current.deactivate();
       }
     };
-  }, [topic]);
+  }, [topic]); // Only reconnect when the topic changes
 
   return { connected };
 };

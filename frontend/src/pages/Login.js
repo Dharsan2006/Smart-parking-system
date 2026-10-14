@@ -17,20 +17,31 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await authService.login(form.email, form.password);
+      const cleanEmail = form.email.trim().toLowerCase();
+      const res = await authService.login(cleanEmail, form.password);
       const { token, id, name, email, role } = res.data;
       login({ id, name, email, role }, token);
       toast.success(`Welcome back, ${name}!`);
       navigate(role === 'ADMIN' ? '/admin' : '/');
     } catch (err) {
-      const message =
-        typeof err.response?.data === 'string'
-          ? err.response.data
-          : err.response?.data?.message || 'Login failed. Check your credentials.';
+      let message = 'Login failed. Check your credentials.';
+      if (typeof err.response?.data === 'string') {
+        message = err.response.data;
+      } else if (err.response?.data?.message) {
+        message = err.response.data.message;
+      } else if (typeof err.response?.data === 'object') {
+        message = Object.values(err.response.data).join(', ');
+      } else if (!err.response) {
+        message = 'Unable to connect to the backend server on port 8081. Please check if the backend is running.';
+      }
       toast.error(message);
     } finally {
       setLoading(false);
     }
+  };
+
+  const fillDemo = (email, password) => {
+    setForm({ email, password });
   };
 
   return (
@@ -77,8 +88,12 @@ const Login = () => {
         </div>
 
         <div className="demo-credentials">
-          <p><strong>Demo Admin:</strong> admin@smartpark.com / admin123</p>
-          <p><strong>Demo User:</strong> user@smartpark.com / user123</p>
+          <p style={{ cursor: 'pointer', margin: '4px 0' }} onClick={() => fillDemo('admin@smartpark.com', 'admin123')} title="Click to autofill Admin">
+            <strong>Demo Admin:</strong> admin@smartpark.com / admin123 <span style={{ textDecoration: 'underline', fontSize: '11px', color: '#6366f1' }}>(Click to fill)</span>
+          </p>
+          <p style={{ cursor: 'pointer', margin: '4px 0' }} onClick={() => fillDemo('user@smartpark.com', 'user123')} title="Click to autofill User">
+            <strong>Demo User:</strong> user@smartpark.com / user123 <span style={{ textDecoration: 'underline', fontSize: '11px', color: '#6366f1' }}>(Click to fill)</span>
+          </p>
         </div>
       </div>
     </div>

@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/slots")
-@CrossOrigin(origins = "*")
 public class ParkingSlotController {
 
     @Autowired
@@ -31,3 +30,4 @@ public class ParkingSlotController {
         return ResponseEntity.ok(parkingSlotService.getSlotById(id));
     }
 }
+

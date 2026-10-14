@@ -30,15 +30,16 @@ public class AuthService {
     private JwtUtils jwtUtils;
 
     public AuthResponse register(RegisterRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
+        String cleanEmail = request.getEmail() != null ? request.getEmail().trim().toLowerCase() : "";
+        if (userRepository.existsByEmailIgnoreCase(cleanEmail)) {
             throw new RuntimeException("Email already in use");
         }
 
         User user = new User();
-        user.setName(request.getName());
-        user.setEmail(request.getEmail());
+        user.setName(request.getName() != null ? request.getName().trim() : "");
+        user.setEmail(cleanEmail);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setPhone(request.getPhone());
+        user.setPhone(request.getPhone() != null ? request.getPhone().trim() : null);
         user.setRole(User.Role.USER);
 
         userRepository.save(user);
@@ -48,13 +49,14 @@ public class AuthService {
     }
 
     public AuthResponse login(AuthRequest request) {
+        String cleanEmail = request.getEmail() != null ? request.getEmail().trim().toLowerCase() : "";
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+                new UsernamePasswordAuthenticationToken(cleanEmail, request.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
-        User user = userRepository.findByEmail(request.getEmail())
+        User user = userRepository.findByEmailIgnoreCase(cleanEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         return new AuthResponse(jwt, user.getId(), user.getName(), user.getEmail(), user.getRole().name());

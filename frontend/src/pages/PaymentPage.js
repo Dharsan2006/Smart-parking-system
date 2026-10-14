@@ -33,7 +33,7 @@ const PaymentPage = () => {
       })
       .catch(() => navigate('/bookings'))
       .finally(() => setLoading(false));
-  }, [bookingId]);
+  }, [bookingId, navigate]);
 
   const handlePayment = async () => {
     if (!paymentMethod) {

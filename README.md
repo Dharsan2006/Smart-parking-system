@@ -31,50 +31,58 @@ Smart parking Management/
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Java 17+
-- Node.js 18+
+- Java 21 (or 17+)
+- Node.js 18+ (tested on Node.js 24)
 - PostgreSQL 15+
 - Maven 3.8+
+- Docker & Docker Desktop (Optional if running in container)
 
 ---
 
-### Backend Setup
+### Running the Application
 
-1. **Configure PostgreSQL** — Update `backend/src/main/resources/application.properties`:
-   ```properties
-   spring.datasource.url=jdbc:postgresql://localhost:5432/Smartparking
-   spring.datasource.username=postgres
-   spring.datasource.password=12345
-   ```
+#### Option 1: Run Backend via Docker (Recommended)
+The backend container `smartpark-container` (`smartpark-backend:1.2`) runs on port **8081**.
 
-2. **Run the backend**:
-   ```bash
-   cd backend
-   mvn spring-boot:run
-   ```
-   The API starts at `http://localhost:8080`
+In **Terminal 1** (PowerShell):
+```powershell
+docker start smartpark-container
+```
+To verify the container is running and view live logs:
+```powershell
+docker ps
+docker logs -f smartpark-container
+```
 
-3. **Auto-seeded data** on first run:
-   - Admin: `admin@smartpark.com` / `admin123`
-   - User: `user@smartpark.com` / `user123`
-   - 50 parking slots across 3 floors
+#### Option 2: Run Backend Directly via Maven (Without Docker)
+If you prefer running Spring Boot directly on your host machine:
+
+In **Terminal 1** (PowerShell):
+```powershell
+cd "backend"
+mvn spring-boot:run
+```
+The API starts at `http://localhost:8081`
 
 ---
 
-### Frontend Setup
+#### Start Frontend (React)
+In **Terminal 2** (PowerShell):
+```powershell
+cd "frontend"
+npm install    # (only needed first time)
+npm start
+```
+The frontend opens automatically at `http://localhost:3000`
 
-1. **Install dependencies**:
-   ```bash
-   cd frontend
-   
-   npm install
-   ```
+---
 
-2. **Start the app**:
-   ```bash
-   npm start
-   ```
-   Opens at `http://localhost:3000`
+### Default Demo Credentials & Auto-Seeded Data
+The system auto-seeds the following on startup:
+- **Admin:** `admin@smartpark.com` / `admin123`
+- **User:** `user@smartpark.com` / `user123`
+- *Tip: On the Sign In page, you can click on either Demo Admin or Demo User to automatically autofill the login form!*
+- **50 parking slots** pre-configured across 3 floors (Floors 1, 2, and 3)
 
 ---
 

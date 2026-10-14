@@ -36,3 +36,7 @@ yarn-error.log*
 .env.production.local
 
 .vercel
+
+# Docker secret files --- NEVER commit
+backend/docker.env
+backend/docker.env.txt

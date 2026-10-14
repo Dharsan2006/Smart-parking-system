@@ -33,7 +33,7 @@ const BookingPage = () => {
       .then(res => setSlot(res.data))
       .catch(() => { toast.error('Slot not found'); navigate('/parking-map'); })
       .finally(() => setLoading(false));
-  }, [slotId]);
+  }, [slotId, navigate]);
 
   const getDuration = () => {
     const start = new Date(form.startTime);

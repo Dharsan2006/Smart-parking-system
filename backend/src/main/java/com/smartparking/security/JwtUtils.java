@@ -1,7 +1,6 @@
 package com.smartparking.security;
 
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,9 +43,13 @@ public class JwtUtils {
     }
 
     private Key key() {
-        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(
-                java.util.Base64.getEncoder().encodeToString(jwtSecret.getBytes())
-        ));
+        // Encode the raw secret to Base64 then decode it for the HMAC key.
+        // This ensures a consistent, valid-length key regardless of the secret format.
+        byte[] keyBytes = java.util.Base64.getEncoder().encode(jwtSecret.getBytes());
+        // Trim to exactly 32 bytes (256-bit) for HS256
+        byte[] trimmed = new byte[Math.min(keyBytes.length, 64)];
+        System.arraycopy(keyBytes, 0, trimmed, 0, trimmed.length);
+        return Keys.hmacShaKeyFor(trimmed);
     }
 
     public String getEmailFromJwtToken(String token) {

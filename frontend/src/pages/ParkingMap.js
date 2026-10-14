@@ -9,11 +9,9 @@ const ParkingMap = () => {
   const [slots, setSlots] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('ALL');
-  const [wsConnected, setWsConnected] = useState(false);
 
   const { connected } = useWebSocket('/topic/slots', (updatedSlots) => {
     setSlots(updatedSlots);
-    setWsConnected(true);
   });
 
   useEffect(() => {

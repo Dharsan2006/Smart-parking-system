@@ -58,14 +58,14 @@ class AuthServiceTest {
     @Test
     void testLoginSuccess() {
         AuthRequest request = new AuthRequest();
-        request.setEmail("test@smartpark.com");
+        request.setEmail("Test@SmartPark.com ");
         request.setPassword("password123");
 
         Authentication authentication = mock(Authentication.class);
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(authentication);
         when(jwtUtils.generateJwtToken(authentication)).thenReturn("jwt-test-token");
-        when(userRepository.findByEmail("test@smartpark.com")).thenReturn(Optional.of(sampleUser));
+        when(userRepository.findByEmailIgnoreCase("test@smartpark.com")).thenReturn(Optional.of(sampleUser));
 
         AuthResponse response = authService.login(request);
 
@@ -92,11 +92,11 @@ class AuthServiceTest {
     void testRegisterSuccess() {
         RegisterRequest request = new RegisterRequest();
         request.setName("New User");
-        request.setEmail("new@smartpark.com");
+        request.setEmail(" New@SmartPark.com ");
         request.setPassword("secret123");
         request.setPhone("+1987654321");
 
-        when(userRepository.existsByEmail("new@smartpark.com")).thenReturn(false);
+        when(userRepository.existsByEmailIgnoreCase("new@smartpark.com")).thenReturn(false);
         when(passwordEncoder.encode("secret123")).thenReturn("encodedSecret");
         when(jwtUtils.generateTokenFromEmail("new@smartpark.com")).thenReturn("jwt-new-token");
 
@@ -116,7 +116,7 @@ class AuthServiceTest {
         request.setEmail("test@smartpark.com");
         request.setPassword("password123");
 
-        when(userRepository.existsByEmail("test@smartpark.com")).thenReturn(true);
+        when(userRepository.existsByEmailIgnoreCase("test@smartpark.com")).thenReturn(true);
 
         RuntimeException ex = assertThrows(RuntimeException.class, () -> authService.register(request));
         assertEquals("Email already in use", ex.getMessage());

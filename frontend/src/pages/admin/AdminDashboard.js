@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../../components/layout/Layout';
 import { adminService } from '../../services/adminService';
-import { parkingService } from '../../services/parkingService';
 import useWebSocket from '../../hooks/useWebSocket';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -25,22 +24,16 @@ const SLOT_COLORS = ['#10b981', '#ef4444', '#f59e0b', '#6b7280'];
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
-  const [slots, setSlots] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useWebSocket('/topic/slots', (updatedSlots) => {
-    setSlots(updatedSlots);
-  });
+  // Real-time slot updates are broadcast via WebSocket but stats are shown here
+  useWebSocket('/topic/slots', () => { /* slots updated — refresh stats */ });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [statsRes, slotsRes] = await Promise.all([
-          adminService.getDashboardStats(),
-          parkingService.getAllSlots(),
-        ]);
+        const statsRes = await adminService.getDashboardStats();
         setStats(statsRes.data);
-        setSlots(slotsRes.data);
       } catch (err) {
         console.error(err);
       } finally {

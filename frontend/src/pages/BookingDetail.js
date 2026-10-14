@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { bookingService } from '../services/bookingService';
@@ -22,7 +22,7 @@ const BookingDetail = () => {
   const [exiting, setExiting] = useState(false);
   const [cancelling, setCancelling] = useState(false);
 
-  const fetchBooking = async () => {
+  const fetchBooking = useCallback(async () => {
     try {
       const res = await bookingService.getBookingById(id);
       setBooking(res.data);
@@ -32,9 +32,9 @@ const BookingDetail = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, navigate]);
 
-  useEffect(() => { fetchBooking(); }, [id]);
+  useEffect(() => { fetchBooking(); }, [fetchBooking]);
 
   const handleExit = async () => {
     setExiting(true);

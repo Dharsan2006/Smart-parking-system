@@ -21,16 +21,23 @@ const Register = () => {
     }
     setLoading(true);
     try {
-      const res = await authService.register(form.name, form.email, form.password, form.phone);
+      const cleanEmail = form.email.trim().toLowerCase();
+      const cleanName = form.name.trim();
+      const cleanPhone = form.phone.trim();
+      const res = await authService.register(cleanName, cleanEmail, form.password, cleanPhone);
       const { token, id, name, email, role } = res.data;
       login({ id, name, email, role }, token);
       toast.success('Account created successfully!');
       navigate('/');
     } catch (err) {
-      const message =
-        typeof err.response?.data === 'string'
-          ? err.response.data
-          : err.response?.data?.message || 'Registration failed';
+      let message = 'Registration failed';
+      if (typeof err.response?.data === 'string') {
+        message = err.response.data;
+      } else if (err.response?.data?.message) {
+        message = err.response.data.message;
+      } else if (typeof err.response?.data === 'object') {
+        message = Object.values(err.response.data).join(', ');
+      }
       toast.error(message);
     } finally {
       setLoading(false);
